@@ -32,10 +32,8 @@ angular.module('extractionApp', ['ui.router'])
   // function that runs the "I-AWARE INTERVENTION GAME" Panic Control
   function panicController(ExtractionFactory) {
     var pCtrl = this;
-    var i = 0;
-    function myCount(){
-        i++;
-      }
+    var i = 0; // myCount() works to update iterations throughout controller
+    
     pCtrl.gameRecord = [];
     pCtrl.response = "";
 
@@ -52,8 +50,10 @@ angular.module('extractionApp', ['ui.router'])
       // console.log(pCtrl.gameRecord);
     }
 
-    pCtrl.submitReponse = function(){
+    pCtrl.submitResponse = function(e){
+      var timeStamp = e.timeStamp;
       pCtrl.gameRecord["response" + i] = pCtrl.response;
+      pCtrl.gameRecord["timeStamp" + i] = timeStamp;
       pCtrl.response = "";
       console.log(pCtrl.gameRecord);
       // mobile testing alert
@@ -63,10 +63,13 @@ angular.module('extractionApp', ['ui.router'])
 
     // Access object with multiple arrays that are the text the Commanding Officer statements
     pCtrl.officerCommand = commandingOfficer.sudBefore[1]
-
+    
+    // establish function myCount() to interate throughout the controller
+    function myCount(){
+        i++;
+      }
     //console.log("this is returned from eFactory " + ExtractionFactory)
     // pCtrl.greeting = "panic controller greeting"
-  
   }
 
 //  homeCtrl as hCtrl
