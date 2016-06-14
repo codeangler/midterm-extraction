@@ -33,11 +33,21 @@ angular.module('extractionApp', ['ui.router'])
 // function that runs the "I-AWARE INTERVENTION GAME" Panic Control
   function panicController(ExtractionFactory) {
     var pCtrl = this;
+    pCtrl.gameRecord = [];
+    
+    // Function to gather the value of the the SUD Rating + Timestamp at that moment
+    pCtrl.submitRating = function(event) {
+      var rating = Number(event.target.id);
+      var timeStamp = event.timeStamp;
+      console.log(event.timeStamp);
+    }
 
-    pCtrl.officerCommand = commandingOfficer.sudBefore[0]
-    console.log("this is returned from eFactory " + ExtractionFactory)
+    // Access object with multiple arrays that are the text the Commanding Officer states
+    pCtrl.officerCommand = commandingOfficer.sudBefore[1]
+
+    //console.log("this is returned from eFactory " + ExtractionFactory)
     // pCtrl.greeting = "panic controller greeting"
-    // 
+  
   }
 
 //  homeCtrl as hCtrl
