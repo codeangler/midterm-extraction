@@ -40,11 +40,14 @@ angular.module('extractionApp', ['ui.router'])
       var timeStamp = event.timeStamp;
 
       // .push(rating &  timeStamp) to gameRecord Array
-      pCtrl.gameRecord.push({startTime: rating, timeStamp: timeStamp})
-      console.log(pCtrl.gameRecord);
+      pCtrl.gameRecord.push({sud: rating, timeStamp: timeStamp})
+      // console.log(pCtrl.gameRecord);
     }
 
-    // Access object with multiple arrays that are the text the Commanding Officer states
+    pCtrl.submitResponse = function(response){
+      console.log('I hope this is the response from submission in a text input ' + response)
+    }
+    // Access object with multiple arrays that are the text the Commanding Officer statements
     pCtrl.officerCommand = commandingOfficer.sudBefore[1]
 
     //console.log("this is returned from eFactory " + ExtractionFactory)
