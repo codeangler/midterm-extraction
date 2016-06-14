@@ -3,7 +3,8 @@ angular.module('extractionApp', ['ui.router'])
   .controller('homeCtrl', homeController)
   .controller('panicCtrl', panicController)
 
-  configRouter.$inject = ['$stateProvider', '$urlRouterProvider']
+  configRouter.$inject = ['$stateProvider', '$urlRouterProvider'];
+  panicController.$inject = ['ExtractionFactory'];
 
 // Establish partials of .states and .states.sub
   function configRouter($stateProvider, $urlRouterProvider) {
@@ -30,10 +31,13 @@ angular.module('extractionApp', ['ui.router'])
   // 
 
 // function that runs the "I-AWARE INTERVENTION GAME" Panic Control
-  function panicController() {
+  function panicController(ExtractionFactory) {
     var pCtrl = this;
-    pCtrl.greeting = "panic controller greeting"
-    console.log("hello from " + pCtrl.greeting);
+
+    pCtrl.officerCommand = commandingOfficer.sudBefore[0]
+    console.log("this is returned from eFactory " + ExtractionFactory)
+    // pCtrl.greeting = "panic controller greeting"
+    // 
   }
 
 //  homeCtrl as hCtrl
