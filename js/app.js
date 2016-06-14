@@ -6,7 +6,7 @@ angular.module('extractionApp', ['ui.router'])
   configRouter.$inject = ['$stateProvider', '$urlRouterProvider'];
   panicController.$inject = ['ExtractionFactory'];
 
-// Establish partials of .states and .states.sub
+  // Establish partials of .states and .states.sub
   function configRouter($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('home',{
@@ -28,9 +28,8 @@ angular.module('extractionApp', ['ui.router'])
 
     $urlRouterProvider.otherwise('/')
   }
-  // 
-
-// function that runs the "I-AWARE INTERVENTION GAME" Panic Control
+  
+  // function that runs the "I-AWARE INTERVENTION GAME" Panic Control
   function panicController(ExtractionFactory) {
     var pCtrl = this;
     pCtrl.gameRecord = [];
@@ -39,7 +38,10 @@ angular.module('extractionApp', ['ui.router'])
     pCtrl.submitRating = function(event) {
       var rating = Number(event.target.id);
       var timeStamp = event.timeStamp;
-      console.log(event.timeStamp);
+
+      // .push(rating &  timeStamp) to gameRecord Array
+      pCtrl.gameRecord.push({startTime: rating, timeStamp: timeStamp})
+      console.log(pCtrl.gameRecord);
     }
 
     // Access object with multiple arrays that are the text the Commanding Officer states
