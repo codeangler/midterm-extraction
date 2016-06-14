@@ -32,22 +32,35 @@ angular.module('extractionApp', ['ui.router'])
   // function that runs the "I-AWARE INTERVENTION GAME" Panic Control
   function panicController(ExtractionFactory) {
     var pCtrl = this;
+    var i = 0;
+    function myCount(){
+        i++;
+      }
     pCtrl.gameRecord = [];
     pCtrl.response = "";
+
     // Function to gather the value of the the SUD Rating + Timestamp at that moment
     pCtrl.submitRating = function(event) {
       var rating = Number(event.target.id);
       var timeStamp = event.timeStamp;
 
       // .push(rating &  timeStamp) to gameRecord Array
-      pCtrl.gameRecord.push({sud: rating, timeStamp: timeStamp})
+      // pCtrl.gameRecord.push({sud: rating, timeStamp: timeStamp})
+      pCtrl.gameRecord["sud" + i] = rating;
+      pCtrl.gameRecord["timeStamp" + i] = timeStamp;
+      myCount();
       // console.log(pCtrl.gameRecord);
     }
 
     pCtrl.submitReponse = function(){
-      pCtrl.gameRecord[0]["response" + "i"] = pCtrl.response;
-      alert('I hope this is the response from submission in a text input ' + pCtrl.gameRecord[0].responsei)
+      pCtrl.gameRecord["response" + i] = pCtrl.response;
+      pCtrl.response = "";
+      console.log(pCtrl.gameRecord);
+      // mobile testing alert
+      // alert('response from submission in a text input ' + pCtrl.gameRecord["response" + i])
+      myCount();
     }
+
     // Access object with multiple arrays that are the text the Commanding Officer statements
     pCtrl.officerCommand = commandingOfficer.sudBefore[1]
 
