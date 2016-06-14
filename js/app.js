@@ -45,7 +45,8 @@ angular.module('extractionApp', ['ui.router'])
     }
 
     pCtrl.submitReponse = function(){
-      console.log('I hope this is the response from submission in a text input ' + pCtrl.response)
+      pCtrl.gameRecord[0]["response" + "i"] = pCtrl.response;
+      console.log('I hope this is the response from submission in a text input ' , pCtrl.gameRecord)
     }
     // Access object with multiple arrays that are the text the Commanding Officer statements
     pCtrl.officerCommand = commandingOfficer.sudBefore[1]
