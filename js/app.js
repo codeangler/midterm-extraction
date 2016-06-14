@@ -33,7 +33,7 @@ angular.module('extractionApp', ['ui.router'])
   function panicController(ExtractionFactory) {
     var pCtrl = this;
     pCtrl.gameRecord = [];
-    
+    pCtrl.response = "";
     // Function to gather the value of the the SUD Rating + Timestamp at that moment
     pCtrl.submitRating = function(event) {
       var rating = Number(event.target.id);
@@ -44,8 +44,8 @@ angular.module('extractionApp', ['ui.router'])
       // console.log(pCtrl.gameRecord);
     }
 
-    pCtrl.submitResponse = function(response){
-      console.log('I hope this is the response from submission in a text input ' + response)
+    pCtrl.submitReponse = function(){
+      console.log('I hope this is the response from submission in a text input ' + pCtrl.response)
     }
     // Access object with multiple arrays that are the text the Commanding Officer statements
     pCtrl.officerCommand = commandingOfficer.sudBefore[1]
