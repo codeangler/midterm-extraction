@@ -4,7 +4,7 @@ angular.module('extractionApp', ['ui.router'])
   .controller('panicCtrl', panicController)
 
   configRouter.$inject = ['$stateProvider', '$urlRouterProvider'];
-  panicController.$inject = ['ExtractionFactory', '$scope'];
+  panicController.$inject = ['ExtractionFactory', '$scope', '$state'];
 
   // Establish partials of .states and .states.sub
   function configRouter($stateProvider, $urlRouterProvider) {
@@ -25,30 +25,33 @@ angular.module('extractionApp', ['ui.router'])
       .state('panicGame.intervention', {
         templateUrl: 'partials/panic-intervention.html'
       })
+      .state('panicRecord',{
+        url: '/panic-record',
+        templateUrl: 'partials/panic-record.html',
+        controller: 'panicCtrl as pCtrl'
+      })
 
     $urlRouterProvider.otherwise('/')
   }
   
   // function that runs the "I-AWARE INTERVENTION GAME" Panic Control
-  function panicController(ExtractionFactory, $scope) {
+  function panicController(ExtractionFactory, $scope, $state) {
     var pCtrl = this;
     var i = 0; // myCount() works to update iterations throughout controller
     
-
     pCtrl.gameRecord = [];
     pCtrl.response = "";
-
-    // Function to gather the value of the the SUD Rating + Timestamp at that moment
+    pCtrl.greeting = "this is something "
+    // SUD Rating + Timestamp at that moment of selection
     pCtrl.submitRating = function(event) {
       var rating = Number(event.target.id);
       var timeStamp = event.timeStamp;
 
       // .push(rating &  timeStamp) to gameRecord Array
-      // pCtrl.gameRecord.push({sud: rating, timeStamp: timeStamp})
+      // alternative syntax that needs spefic iteration pCtrl.gameRecord.push({sud: rating, timeStamp: timeStamp})
       pCtrl.gameRecord["sud" + i] = rating;
       pCtrl.gameRecord["timeStamp" + i] = timeStamp;
       myCount();
-      // pCtrl.officerTypewriter = "";
       pCtrl.officerCommands(i);
     }
 
@@ -62,10 +65,16 @@ angular.module('extractionApp', ['ui.router'])
       // alert('response from submission in a text input ' + pCtrl.gameRecord["response" + i])
       myCount();
       pCtrl.officerCommands(i);
+      
+      // After completing all steps of intervention return to SUD rating 
+      if ( i == 3) {
+        $state.go("panicGame.rating")
+      }
+      // Swap ui-sref="game-report" w/n panicGame.rating 
+      ratingSrefSwap()
     }
 
-    // Access object with multiple arrays that are the text the Commanding Officer statements
- 
+    // Access Commanding Officer statements stored as arrays within object found in app.extraction-factory.js
     pCtrl.officerCommands = function (i) {
       if ( i == 0 ) {
         pCtrl.officerStatements = commandingOfficer.sud[1]
@@ -109,13 +118,13 @@ angular.module('extractionApp', ['ui.router'])
       }   
       
       // pCtrl.officerTypewriter = pCtrl.officerStatements;
-    }
- 
+    } 
     pCtrl.officerCommands(i);
+
     // establish function myCount() to interate throughout the controller
     function myCount(){ i++; }
 
-    // A function that rolls through the string to create a typewriter effect
+    // Typewriter effect using setInterval() to effect {{bound.text}}  | clearInterval()
     function typewriter() {
       var localContent = pCtrl.officerStatements;
       pCtrl.officerTypewriter = "";
@@ -131,9 +140,12 @@ angular.module('extractionApp', ['ui.router'])
         }, 100);
     }
 
+    // Set ui-sref w/n panic-rating.html dependent on value of i 
     
-    //console.log("this is returned from eFactory " + ExtractionFactory)
-    // pCtrl.greeting = "panic controller greeting"
+    pCtrl.ratingSref = "panicGame.intervention";
+    function ratingSrefSwap() {
+      pCtrl.ratingSref = 'panicRecord';
+    }
   }
 
 //  homeCtrl as hCtrl
@@ -141,6 +153,4 @@ angular.module('extractionApp', ['ui.router'])
     var hCtrl = this;
     hCtrl.greeting = 'home controller greeting'
     console.log('hello from ' + hCtrl.greeting);
-
-
   }
