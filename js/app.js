@@ -4,7 +4,7 @@ angular.module('extractionApp', ['ui.router'])
   .controller('panicCtrl', panicController)
 
   configRouter.$inject = ['$stateProvider', '$urlRouterProvider'];
-  panicController.$inject = ['ExtractionFactory'];
+  panicController.$inject = ['ExtractionFactory', '$scope'];
 
   // Establish partials of .states and .states.sub
   function configRouter($stateProvider, $urlRouterProvider) {
@@ -30,10 +30,11 @@ angular.module('extractionApp', ['ui.router'])
   }
   
   // function that runs the "I-AWARE INTERVENTION GAME" Panic Control
-  function panicController(ExtractionFactory) {
+  function panicController(ExtractionFactory, $scope) {
     var pCtrl = this;
     var i = 0; // myCount() works to update iterations throughout controller
     
+
     pCtrl.gameRecord = [];
     pCtrl.response = "";
 
@@ -47,7 +48,7 @@ angular.module('extractionApp', ['ui.router'])
       pCtrl.gameRecord["sud" + i] = rating;
       pCtrl.gameRecord["timeStamp" + i] = timeStamp;
       myCount();
-      officerCommands(i);
+      pCtrl.officerCommands(i);
       // console.log(pCtrl.gameRecord);
     }
 
@@ -60,13 +61,17 @@ angular.module('extractionApp', ['ui.router'])
       // mobile testing alert
       // alert('response from submission in a text input ' + pCtrl.gameRecord["response" + i])
       myCount();
-      officerCommands(i);
+      pCtrl.officerCommands(i);
     }
 
     // Access object with multiple arrays that are the text the Commanding Officer statements
-    pCtrl.officerStatements = commandingOfficer.sud[1]
-    officerCommands = function (i) {
-      if ( i <= 5 ) {
+ 
+    pCtrl.officerCommands = function (i) {
+      pCtrl.officerTypewriter = "";
+      if ( i == 0 ) {
+        pCtrl.officerStatements = commandingOfficer.sud[1]
+      }
+      else if ( i <= 5 ) {
         // sight
         pCtrl.officerStatements = commandingOfficer.sight[0]
       }
@@ -90,7 +95,19 @@ angular.module('extractionApp', ['ui.router'])
         // Announce Mission Complete Get Another Sud Reading 
         pCtrl.officerStatements = commandingOfficer.sud[0]
       }   
-  }
+      pCtrl.officerTypewriter = pCtrl.officerStatements;
+      
+      // var k = 0;
+      // var timer = setInterval(function(){
+      // if ( k < pCtrl.officerStatements.length){
+      //   pCtrl.officerTypewriter += pCtrl.officerStatements[k]
+      //   k++;
+      //   $scope.$apply();
+      //   }
+      // }, 100);
+    }
+ 
+    pCtrl.officerCommands(i);
     // establish function myCount() to interate throughout the controller
     function myCount(){
         i++;
