@@ -1,14 +1,21 @@
 <!-- This row is for the input data from user -->
 <div id="promptResponse" class="row">
-  <div class="col-xs-1">
-    <p>{i}<p>
+  <div class="col-xs-3">
+    
+    <div class="btn-group">
+      <div class="btn-group">
+        <b ng-repeat="item in pCtrl.responseCounter" ng-class="{'btn-warning': isActive}" class="btn btn-default">{{item}}</b>
+        
+      </div>
+    </div>
+    <p>Report: {{pCtrl.currentSense}}</p>
   </div>
-  <div class="col-xs-10 col-xs-offset-1">
+  <div class="col-xs-8">
     <div class="form-group">
       <!-- <label class="control-label" for="inputSmall">Sight, Sound</label> -->
       <form ng-submit="pCtrl.submitResponse($event)">
         <div class="input-group">
-          <input ng-model="pCtrl.response" id="inputSmall" class="form-control" type="text" placeholder="sight \, sound" autofocus autocomplete="off">
+          <input ng-model="pCtrl.response" id="inputSmall" class="form-control" type="text" placeholder="submit responses with RETURN key or selecting submit" autofocus autocomplete="off">
           <span class="input-group-btn">
             <button class="btn btn-default btn-primary" type="submit">Submit</button>
           </span>

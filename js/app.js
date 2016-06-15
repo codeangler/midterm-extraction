@@ -38,7 +38,7 @@ angular.module('extractionApp', ['ui.router'])
   function panicController(ExtractionFactory, $scope, $state) {
     var pCtrl = this;
     var i = 0; // myCount() works to update iterations throughout controller
-    
+    pCtrl.responseCounter = [5,4,3,2,1]
     pCtrl.gameRecord = [];
     pCtrl.response = "";
     pCtrl.greeting = "this is something "
@@ -67,7 +67,7 @@ angular.module('extractionApp', ['ui.router'])
       pCtrl.officerCommands(i);
       
       // After completing all steps of intervention return to SUD rating 
-      if ( i == 3) {
+      if ( i == 16) {
         $state.go("panicGame.rating")
       }
       // Swap ui-sref="game-report" w/n panicGame.rating 
@@ -82,30 +82,37 @@ angular.module('extractionApp', ['ui.router'])
       }
       else if ( i == 1 ) {
         // sight
-        pCtrl.officerStatements = commandingOfficer.sight[0]
+        pCtrl.currentSense = "Sights";
+        pCtrl.officerStatements = commandingOfficer.sight[0];
         clearInterval(typewriterTimer);
         typewriter();
+        // Establish Count Down for Sight
+        
       }
       else if ( i == 6 ){
         // touch
+        pCtrl.currentSense = "Textures";
         pCtrl.officerStatements = commandingOfficer.touch[0]
         clearInterval(typewriterTimer);
         typewriter();
       }
       else if ( i == 10 ){
         // sound
+        pCtrl.currentSense = "Sounds";
         pCtrl.officerStatements = commandingOfficer.sound[0]
         clearInterval(typewriterTimer);
         typewriter();
       }
       else if ( i == 13 ) {
         // smell
+        pCtrl.currentSense = "Smells";
         pCtrl.officerStatements = commandingOfficer.smell[0]
         clearInterval(typewriterTimer);
         typewriter();
       } 
       else if ( i == 15 ){
         // taste
+        pCtrl.currentSense = "Taste";
         pCtrl.officerStatements = commandingOfficer.taste[0]
         clearInterval(typewriterTimer);
         typewriter();
