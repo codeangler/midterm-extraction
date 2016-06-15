@@ -47,6 +47,7 @@ angular.module('extractionApp', ['ui.router'])
       pCtrl.gameRecord["sud" + i] = rating;
       pCtrl.gameRecord["timeStamp" + i] = timeStamp;
       myCount();
+      officerCommands(i);
       // console.log(pCtrl.gameRecord);
     }
 
@@ -59,11 +60,37 @@ angular.module('extractionApp', ['ui.router'])
       // mobile testing alert
       // alert('response from submission in a text input ' + pCtrl.gameRecord["response" + i])
       myCount();
+      officerCommands(i);
     }
 
     // Access object with multiple arrays that are the text the Commanding Officer statements
-    pCtrl.officerCommand = commandingOfficer.sudBefore[1]
-    
+    pCtrl.officerStatements = commandingOfficer.sud[1]
+    officerCommands = function (i) {
+      if ( i <= 5 ) {
+        // sight
+        pCtrl.officerStatements = commandingOfficer.sight[0]
+      }
+      else if ( i <= 9 ){
+        // touch
+        pCtrl.officerStatements = commandingOfficer.touch[0]
+      }
+      else if ( i <= 12 ){
+        // sound
+        pCtrl.officerStatements = commandingOfficer.sound[0]
+      }
+      else if ( i <= 14 ) {
+        // smell
+        pCtrl.officerStatements = commandingOfficer.smell[0]
+      } 
+      else if ( i <= 15 ){
+        // taste
+        pCtrl.officerStatements = commandingOfficer.taste[0]
+      }
+      else if ( i <= 16 ){
+        // Announce Mission Complete Get Another Sud Reading 
+        pCtrl.officerStatements = commandingOfficer.sud[0]
+      }   
+  }
     // establish function myCount() to interate throughout the controller
     function myCount(){
         i++;
