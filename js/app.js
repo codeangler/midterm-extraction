@@ -74,37 +74,37 @@ angular.module('extractionApp', ['ui.router'])
       else if ( i == 1 ) {
         // sight
         pCtrl.officerStatements = commandingOfficer.sight[0]
-        clearInterval(timer);
+        clearInterval(typewriterTimer);
         typewriter();
       }
       else if ( i == 6 ){
         // touch
         pCtrl.officerStatements = commandingOfficer.touch[0]
-        clearInterval(timer);
+        clearInterval(typewriterTimer);
         typewriter();
       }
       else if ( i == 10 ){
         // sound
         pCtrl.officerStatements = commandingOfficer.sound[0]
-        clearInterval(timer);
+        clearInterval(typewriterTimer);
         typewriter();
       }
       else if ( i == 13 ) {
         // smell
         pCtrl.officerStatements = commandingOfficer.smell[0]
-        clearInterval(timer);
+        clearInterval(typewriterTimer);
         typewriter();
       } 
       else if ( i == 15 ){
         // taste
         pCtrl.officerStatements = commandingOfficer.taste[0]
-        clearInterval(timer);
+        clearInterval(typewriterTimer);
         typewriter();
       }
       else if ( i == 16 ){
         // Announce Mission Complete Get Another Sud Reading 
         pCtrl.officerStatements = commandingOfficer.sud[0]
-        clearInterval(timer);
+        clearInterval(typewriterTimer);
         typewriter();
       }   
       
@@ -122,7 +122,7 @@ angular.module('extractionApp', ['ui.router'])
 
       var k = 0;
      
-      timer = setInterval(function(){
+      typewriterTimer = setInterval(function(){
           if (k < localContent.length){
           pCtrl.officerTypewriter += localContent[k]
           k++;
