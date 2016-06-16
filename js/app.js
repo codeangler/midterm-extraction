@@ -1,6 +1,6 @@
 angular.module('extractionApp', ['ui.router'])
   .config(configRouter)
-  .controller('homeCtrl', homeController)
+  //.controller('homeCtrl', homeController)
   .controller('panicCtrl', panicController)
   
   configRouter.$inject = ['$stateProvider', '$urlRouterProvider'];
@@ -12,7 +12,7 @@ angular.module('extractionApp', ['ui.router'])
       .state('home',{
         url: '/',
         templateUrl: 'partials/home.html',
-        controller: 'homeCtrl as hCtrl',
+        controller: 'panicCtrl as pCtrl',
       })
       .state ('panicGame',{
         url: '/panic-game',
@@ -41,8 +41,6 @@ angular.module('extractionApp', ['ui.router'])
     pCtrl.responseCounter = [5,4,3,2,1]
     pCtrl.gameRecord = [];
     pCtrl.response = "";
-    // pCtrl.greeting = "this is something "
-    console.log(factoryIterator, " you did it")
     // SUD Rating + Timestamp at that moment of selection
     pCtrl.submitRating = function(event) {
       var rating = Number(event.target.id);
@@ -52,11 +50,11 @@ angular.module('extractionApp', ['ui.router'])
       // alternative syntax that needs spefic iteration pCtrl.gameRecord.push({sud: rating, timeStamp: timeStamp})
       pCtrl.gameRecord["sud" + factoryIterator] = rating;
       pCtrl.gameRecord["timeStamp" + factoryIterator] = timeStamp;
+
+
       myCount();
-      console.log("submit Rating func",factoryIterator);
       pCtrl.officerCommands(factoryIterator);
       factoryGameRecord.gameRecord = pCtrl.gameRecord
-      
     }
 
     pCtrl.submitResponse = function(e){
@@ -64,66 +62,73 @@ angular.module('extractionApp', ['ui.router'])
       pCtrl.gameRecord["response" + factoryIterator] = pCtrl.response;
       pCtrl.gameRecord["timeStamp" + factoryIterator] = timeStamp;
       pCtrl.response = "";
+      
       // mobile testing alert
       // alert('response from submission in a text input ' + pCtrl.gameRecord["response" + i])
       myCount();
       pCtrl.officerCommands(factoryIterator);
       factoryGameRecord.gameRecord = pCtrl.gameRecord
       factoryIterator = factoryIterator;
-      
-      ratingAgainState(factoryIterator);   
+         
       // Swap ui-sref="game-report" w/n panicGame.rating 
       ratingSrefSwap()
+      ratingAgainState(factoryIterator);
     }
 
     // Access Commanding Officer statements stored as arrays within object found in app.extraction-factory.js
     pCtrl.officerCommands = function (i) {
       if ( factoryIterator == 0 ) {
-        pCtrl.officerStatements = commandingOfficer.sud[1]
+        factoryIterator++;
+        pCtrl.officerStatements = commandingOfficer.initialHome[0]
         typewriter();
       }
       else if ( factoryIterator == 1 ) {
+        pCtrl.officerStatements = commandingOfficer.sud[1]
+        clearInterval(typewriterTimer);
+        typewriter();
+      }
+      else if ( factoryIterator == 2 ) {
         // sight
         pCtrl.currentSense = "Sights";
         pCtrl.officerStatements = commandingOfficer.sight[0];
-        clearInterval(typewriterTimer);
-        typewriter();  
+        // clearInterval(typewriterTimer);
+        // typewriter();  
       }
-      else if ( factoryIterator == 6 ){
+      else if ( factoryIterator == 7 ){
         // touch
         pCtrl.currentSense = "Textures";
         pCtrl.officerStatements = commandingOfficer.touch[0]
-        clearInterval(typewriterTimer);
-        typewriter();
+        // clearInterval(typewriterTimer);
+        // typewriter();
       }
-      else if ( factoryIterator == 10 ){
+      else if ( factoryIterator == 11 ){
         // sound
         pCtrl.currentSense = "Sounds";
         pCtrl.officerStatements = commandingOfficer.sound[0]
-        clearInterval(typewriterTimer);
-        typewriter();
+        // clearInterval(typewriterTimer);
+        // typewriter();
       }
-      else if ( factoryIterator == 13 ) {
+      else if ( factoryIterator == 14 ) {
         // smell
         pCtrl.currentSense = "Smells";
         pCtrl.officerStatements = commandingOfficer.smell[0]
-        clearInterval(typewriterTimer);
-        typewriter();
+        // clearInterval(typewriterTimer);
+        // typewriter();
       } 
-      else if ( factoryIterator == 15 ){
+      else if ( factoryIterator == 16 ){
         // taste
         pCtrl.currentSense = "Taste";
         pCtrl.officerStatements = commandingOfficer.taste[0]
-        clearInterval(typewriterTimer);
-        typewriter();
+        // clearInterval(typewriterTimer);
+        // typewriter();
       }
-      else if ( factoryIterator == 16 ){
+      else if ( factoryIterator == 17 ){
         // Announce Mission Complete Get Another Sud Reading 
         pCtrl.officerStatements = commandingOfficer.sud[0]
-        clearInterval(typewriterTimer);
-        typewriter();
+        // clearInterval(typewriterTimer);
+        // typewriter();
       } 
-      else if ( factoryIterator == 17 ){
+      else if ( factoryIterator == 18 ){
         // Announce Mission Complete Get Another Sud Reading 
         pCtrl.officerStatements = commandingOfficer.mission[0]
         clearInterval(typewriterTimer);
@@ -160,7 +165,7 @@ angular.module('extractionApp', ['ui.router'])
 
     ratingAgainState = function (i) {
       // After completing all steps of intervention return to SUD rating 
-      if ( factoryIterator == 16) {
+      if ( factoryIterator == 17) {
         $state.go("panicGame.rating")
       }
     }
@@ -170,6 +175,4 @@ angular.module('extractionApp', ['ui.router'])
 //  homeCtrl as hCtrl
   function homeController() {
     var hCtrl = this;
-    hCtrl.greeting = 'home controller greeting'
-    console.log('hello from ' + hCtrl.greeting);
   }
