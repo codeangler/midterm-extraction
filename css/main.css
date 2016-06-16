@@ -18,10 +18,12 @@ div.ratingGroup:nth-child(2){
   margin-bottom: 2px;
 }
 
-.jumbotron p {
+.jumbotron p,
+p {
   color: #00ff00; 
   font-family: "Courier";
 }
+
 
 /*.jumbotron p{
   color: #00ff00; 

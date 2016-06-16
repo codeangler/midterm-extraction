@@ -13,5 +13,14 @@ angular.module('extractionApp')
       smell : ['Describe two smells you are near you'],
       taste : ['Finally, report one thing you can taste presently']
     }
-    return commandingOfficer;
+
+    factoryGameRecord = {};
+
+    factoryIterator = 0
+
+    return {
+      co : commandingOfficer,
+      gameRecord : factoryGameRecord,
+      iterator : factoryIterator,
+    };
   }
