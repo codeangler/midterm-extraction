@@ -41,32 +41,49 @@ angular.module('extractionApp', ['ui.router'])
     pCtrl.responseCounter = [5,4,3,2,1]
     pCtrl.gameRecord = [];
     pCtrl.response = "";
-    // SUD Rating + Timestamp at that moment of selection
+    pCtrl.passFactoryGameRecord = factoryGameRecord;
+    ratingChangeFunc = function(factoryGameRecord){
+      pCtrl.ratingChange = (Number(factoryGameRecord.gameRecord.sud1) - Number(factoryGameRecord.gameRecord.sud17))
+    }
+
+    pCtrl.currentRank = currentRank[0]
+
+    // pCtrl.timeElasped = timeFunction
+
+    // var timeFunction = function (beginning, ending) {
+    //   return (ending - beginning)*1000
+    // }
+
+
+     
+
+
+    // SUD Rating + currentDate at that moment of selection
     pCtrl.submitRating = function(event) {
       var rating = Number(event.target.id);
-      var timeStamp = event.timeStamp;
-
-      // .push(rating &  timeStamp) to gameRecord Array
-      // alternative syntax that needs spefic iteration pCtrl.gameRecord.push({sud: rating, timeStamp: timeStamp})
+      var currentDate = new Date();
+      
+      // .push(rating &  currentDate) to gameRecord Array
+      // alternative syntax that needs spefic iteration pCtrl.gameRecord.push({sud: rating, currentDate: currentDate})
       pCtrl.gameRecord["sud" + factoryIterator] = rating;
-      pCtrl.gameRecord["timeStamp" + factoryIterator] = timeStamp;
-
-
+      pCtrl.gameRecord["currentDate" + factoryIterator] = currentDate;
+      
       myCount();
-      pCtrl.officerCommands(factoryIterator);
+      pCtrl.stepThroughIterator(factoryIterator);
       factoryGameRecord.gameRecord = pCtrl.gameRecord
+              
     }
 
     pCtrl.submitResponse = function(e){
-      var timeStamp = e.timeStamp;
+      var currentDate = new Date();
       pCtrl.gameRecord["response" + factoryIterator] = pCtrl.response;
-      pCtrl.gameRecord["timeStamp" + factoryIterator] = timeStamp;
+      pCtrl.gameRecord["currentDate" + factoryIterator] = currentDate;
       pCtrl.response = "";
       
       // mobile testing alert
       // alert('response from submission in a text input ' + pCtrl.gameRecord["response" + i])
       myCount();
-      pCtrl.officerCommands(factoryIterator);
+      pCtrl.stepThroughIterator(factoryIterator);
       factoryGameRecord.gameRecord = pCtrl.gameRecord
       factoryIterator = factoryIterator;
          
@@ -76,9 +93,10 @@ angular.module('extractionApp', ['ui.router'])
     }
 
     // Access Commanding Officer statements stored as arrays within object found in app.extraction-factory.js
-    pCtrl.officerCommands = function (i) {
+    pCtrl.stepThroughIterator = function (factoryIterator){
+      console.log("stepThroughIterator", factoryIterator)
       if ( factoryIterator == 0 ) {
-        factoryIterator++;
+        myCount();
         pCtrl.officerStatements = commandingOfficer.initialHome[0]
         typewriter();
       }
@@ -133,10 +151,15 @@ angular.module('extractionApp', ['ui.router'])
         pCtrl.officerStatements = commandingOfficer.mission[0]
         clearInterval(typewriterTimer);
         typewriter();
+
+        // console.log(timeFunction)
+        // pCtrl.timeElasped(factoryGameRecord.gameRecord.currentDate0)
+        
+        ratingChangeFunc(factoryGameRecord);
       } 
     } 
-    // initial call of pCtrl.officerCommands(i=0)
-    pCtrl.officerCommands(factoryIterator);
+    // initial call of pCtrl.stepThroughIterator(i=0)
+    pCtrl.stepThroughIterator(factoryIterator);
 
     // establish function myCount() to interate throughout the controller
     function myCount(){ factoryIterator++; }

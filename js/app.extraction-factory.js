@@ -15,6 +15,7 @@ angular.module('extractionApp')
       initialHome : ['Soldier: Recover your hijacked mind by completing these missions!']
     }
 
+    currentRank = ['private', 'Private First Class', 'Lance Corporal']
     factoryGameRecord = {};
     factoryIterator = 0
 
@@ -22,5 +23,6 @@ angular.module('extractionApp')
       co : commandingOfficer,
       gameRecord : factoryGameRecord,
       iterator : factoryIterator,
+      rank : currentRank,
     };
   }

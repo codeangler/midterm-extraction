@@ -1,22 +1,39 @@
 <!--  Game Record Report -->
-<div id="gameRecord" class="row">
-  <div class="jumbotron text-center">
-    <h6>Commanding Officer:</h6>
-    <p>{{pCtrl.officerTypewriter}}</p>
+<div id="gameRecord">
+  <div class="row">
+    <div class="jumbotron text-center">
+      <h6>Commanding Officer:</h6>
+      <p>{{pCtrl.officerTypewriter}}</p>
+    </div>
   </div>
-</div>
-<div class="row">
-  <div class="col-md-4">
-    <h6>Reported Change in Distress</h6>
-    <p>{{pCtrl.ratingChange}}</p>
+  <div class="row">
+    <div class="col-md-4 text-center">
+      <h4>Change in Distress</h4>
+      <p>{{pCtrl.ratingChange}}</p>
+    </div>
+    <div class="col-md-4 text-center">
+      <h4>Staring Level</h4>
+      <p>{{ pCtrl.passFactoryGameRecord.gameRecord.sud1 }}</p>
+    </div>
+    <div class="col-md-4 text-center">
+      <h4>Ending Level</h4>
+      <p>{{ pCtrl.passFactoryGameRecord.gameRecord.sud17}}</p>
+    </div>
+  <div class="row"><hr></div> 
+  <div class="row">
+    <div class="col-md-4 text-center">
+      <h4>Start Time</h4>
+      <p>{{pCtrl.passFactoryGameRecord.gameRecord.currentDate0}}</p>
+    </div>
+    <div class="col-md-4 text-center">
+      <h4>Time Elaspsed</h4>
+      <p>{{pCtrl.timeElaspsed}}</p>
+    </div>
+    <div class="col-md-4 text-center">
+      <h4>Rank</h4>
+      <p>{{pCtrl.currentRank}}</p>
+    </div>
   </div>
-  <div class="col-md-4">
-    <h6>Staring Distress Level</h6>
-    <p></p>
   </div>
-  <div class="col-md-4">
-    <h6>Ending Distress Level</h6>
-    <p></p>
-  </div>   
 </div>
  
