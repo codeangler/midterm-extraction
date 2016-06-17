@@ -42,17 +42,38 @@ angular.module('extractionApp', ['ui.router'])
     pCtrl.gameRecord = [];
     pCtrl.response = "";
     pCtrl.passFactoryGameRecord = factoryGameRecord;
+    pCtrl.currentRank = currentRank[0]
+
+
+    // Return the change in SUD Rating from beginning to end
     ratingChangeFunc = function(factoryGameRecord){
       pCtrl.ratingChange = (Number(factoryGameRecord.gameRecord.sud1) - Number(factoryGameRecord.gameRecord.sud17))
     }
 
-    pCtrl.currentRank = currentRank[0]
+    
 
-    // pCtrl.timeElasped = timeFunction
+    
+    //  Calculate the difference from the beginning of the game and end of the game.
+    var timeFunction = function (factoryGameRecord) {
+      console.log("you are in the time function", 'beginning time ' + factoryGameRecord.gameRecord.currentDate1, 'ending time ' + factoryGameRecord.gameRecord.currentDate17)
+      var duration = (factoryGameRecord.gameRecord.currentDate16 - factoryGameRecord.gameRecord.currentDate1)
+      msToTime(duration)
+    }
 
-    // var timeFunction = function (beginning, ending) {
-    //   return (ending - beginning)*1000
-    // }
+    function msToTime(duration) {
+      console.log('inside msToTime')
+      var milliseconds = parseInt((duration%1000)/100)
+          , seconds = parseInt((duration/1000)%60)
+          , minutes = parseInt((duration/(1000*60))%60)
+          , hours = parseInt((duration/(1000*60*60))%24);
+
+      hours = (hours < 10) ? "0" + hours : hours;
+      minutes = (minutes < 10) ? "0" + minutes : minutes;
+      seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+    pCtrl.timeElasped =  hours + ":" + minutes + ":" + seconds + "." + milliseconds;
+    console.log('pCtrl.timeElasped inside function ', pCtrl.timeElasped )
+}
 
 
      
@@ -62,17 +83,17 @@ angular.module('extractionApp', ['ui.router'])
     pCtrl.submitRating = function(event) {
       var rating = Number(event.target.id);
       var currentDate = new Date();
+      var justDate = currentDate.toDateString();
       var stringDate = currentDate.toString();
       // .push(rating &  currentDate) to gameRecord Array
       // alternative syntax that needs spefic iteration pCtrl.gameRecord.push({sud: rating, currentDate: currentDate})
       pCtrl.gameRecord["sud" + factoryIterator] = rating;
       pCtrl.gameRecord["currentDate" + factoryIterator] = currentDate;
+      pCtrl.gameRecord["toDateString" + factoryIterator] = justDate; 
       pCtrl.gameRecord["stringDate" + factoryIterator] = stringDate; 
       myCount();
       pCtrl.stepThroughIterator(factoryIterator);
-      factoryGameRecord.gameRecord = pCtrl.gameRecord
-      console.log(factoryIterator)
-      console.log(factoryGameRecord.gameRecord.stringDate1)
+      factoryGameRecord.gameRecord = pCtrl.gameRecord  
     }
 
     pCtrl.submitResponse = function(e){
@@ -97,7 +118,7 @@ angular.module('extractionApp', ['ui.router'])
 
     // Access Commanding Officer statements stored as arrays within object found in app.extraction-factory.js
     pCtrl.stepThroughIterator = function (factoryIterator){
-      console.log("stepThroughIterator", factoryIterator)
+      
       if ( factoryIterator == 0 ) {
         myCount();
         pCtrl.officerStatements = commandingOfficer.initialHome[0]
@@ -148,16 +169,14 @@ angular.module('extractionApp', ['ui.router'])
         pCtrl.officerStatements = commandingOfficer.sud[0]
         clearInterval(typewriterTimer);
         typewriter();
+        timeFunction(factoryGameRecord);
       } 
       else if ( factoryIterator == 18 ){
         // Announce Mission Complete Get Another Sud Reading 
         pCtrl.officerStatements = commandingOfficer.mission[0]
         clearInterval(typewriterTimer);
         typewriter();
-
-        // console.log(timeFunction)
-        // pCtrl.timeElasped(factoryGameRecord.gameRecord.currentDate0)
-        
+        console.log('pCtrl.timeElasped ', pCtrl.timeElasped )
         ratingChangeFunc(factoryGameRecord);
       } 
     } 
