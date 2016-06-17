@@ -112,42 +112,42 @@ angular.module('extractionApp', ['ui.router'])
         // sight
         pCtrl.currentSense = "Sights";
         pCtrl.officerStatements = commandingOfficer.sight[0];
-        // clearInterval(typewriterTimer);
-        // typewriter();  
+        clearInterval(typewriterTimer);
+        typewriter();  
       }
       else if ( factoryIterator == 7 ){
         // touch
         pCtrl.currentSense = "Textures";
         pCtrl.officerStatements = commandingOfficer.touch[0]
-        // clearInterval(typewriterTimer);
-        // typewriter();
+        clearInterval(typewriterTimer);
+        typewriter();
       }
       else if ( factoryIterator == 11 ){
         // sound
         pCtrl.currentSense = "Sounds";
         pCtrl.officerStatements = commandingOfficer.sound[0]
-        // clearInterval(typewriterTimer);
-        // typewriter();
+        clearInterval(typewriterTimer);
+        typewriter();
       }
       else if ( factoryIterator == 14 ) {
         // smell
         pCtrl.currentSense = "Smells";
         pCtrl.officerStatements = commandingOfficer.smell[0]
-        // clearInterval(typewriterTimer);
-        // typewriter();
+        clearInterval(typewriterTimer);
+        typewriter();
       } 
       else if ( factoryIterator == 16 ){
         // taste
         pCtrl.currentSense = "Taste";
         pCtrl.officerStatements = commandingOfficer.taste[0]
-        // clearInterval(typewriterTimer);
-        // typewriter();
+        clearInterval(typewriterTimer);
+        typewriter();
       }
       else if ( factoryIterator == 17 ){
         // Announce Mission Complete Get Another Sud Reading 
         pCtrl.officerStatements = commandingOfficer.sud[0]
-        // clearInterval(typewriterTimer);
-        // typewriter();
+        clearInterval(typewriterTimer);
+        typewriter();
       } 
       else if ( factoryIterator == 18 ){
         // Announce Mission Complete Get Another Sud Reading 
