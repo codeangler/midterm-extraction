@@ -62,22 +62,25 @@ angular.module('extractionApp', ['ui.router'])
     pCtrl.submitRating = function(event) {
       var rating = Number(event.target.id);
       var currentDate = new Date();
-      
+      var stringDate = currentDate.toString();
       // .push(rating &  currentDate) to gameRecord Array
       // alternative syntax that needs spefic iteration pCtrl.gameRecord.push({sud: rating, currentDate: currentDate})
       pCtrl.gameRecord["sud" + factoryIterator] = rating;
       pCtrl.gameRecord["currentDate" + factoryIterator] = currentDate;
-      
+      pCtrl.gameRecord["stringDate" + factoryIterator] = stringDate; 
       myCount();
       pCtrl.stepThroughIterator(factoryIterator);
       factoryGameRecord.gameRecord = pCtrl.gameRecord
-              
+      console.log(factoryIterator)
+      console.log(factoryGameRecord.gameRecord.stringDate1)
     }
 
     pCtrl.submitResponse = function(e){
       var currentDate = new Date();
+      var stringDate = currentDate.toString();
       pCtrl.gameRecord["response" + factoryIterator] = pCtrl.response;
       pCtrl.gameRecord["currentDate" + factoryIterator] = currentDate;
+      pCtrl.gameRecord["stringDate" + factoryIterator] = stringDate; 
       pCtrl.response = "";
       
       // mobile testing alert
